@@ -45,6 +45,53 @@ class SpellChecker:
                 return None
 
 
+    def conferma_selezione_lingua(self, e):
+        if self._view.lingua.value == "":
+        # meglio fare:
+        # if not self._lingua.value:
+            self._view.lv.controls.append(ft.Text("Lingua non selezionata, riprovare"))
+        else:
+            self._view.lv.controls.append(ft.Text("Lingua selezionata con successo: " + self._view.lingua.value))
+        self._view.update()
+
+    def conferma_metodo_ricerca(self, e):
+        if self._view.metodoRicerca.value == "":
+            self._view.lv.controls.append(ft.Text("Lingua non selezionata, riprovare"))
+        else:
+            self._view.lv.controls.append(ft.Text("Lingua selezionata con successo: " + self._view.metodoRicerca.value))
+        self._view.update()
+
+    def handleSpellCheck(self, e):
+        self._view.lv.controls.clear()
+        if (self._view.lingua.value == ""
+          or self._view.metodoRicerca.value == ""
+          or self._view.testoInput.value == ""):
+
+            self._view.lv.controls.append(ft.Text("Errore, completare tutti i campi"))
+            self._view.update()
+            return
+
+
+
+        self._view.lv.controls.clear()
+        (paroleErrate, tempo) = self.handleSentence(self._view.testoInput.value, self._view.lingua.value, self._view.metodoRicerca.value)
+        stampaRiga1 = ft.Text("Frase inserita: " + self._view.testoInput.value)
+        stampaRiga2 = ft.Text("Parole errate: " + paroleErrate)
+        stampaRiga3 = ft.Text("Tempo richiesto dalla ricerca: " + str(tempo))
+
+
+        self._view.lv.controls.append(stampaRiga1)
+        self._view.lv.controls.append(stampaRiga2)
+        self._view.lv.controls.append(stampaRiga3)
+
+        self._view.testoInput.value = ""
+        self._view.update()
+
+
+
+
+
+
     def printMenu(self):
         print("______________________________\n" +
               "      SpellChecker 101\n"+

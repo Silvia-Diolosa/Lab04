@@ -27,8 +27,27 @@ class View(object):
         )
 
         # Add your stuff here
+        #ROW1
+        self.lingua = ft.Dropdown(label="Seleziona lingua",
+                                   options=[ft.dropdown.Option("english"), ft.dropdown.Option("italian"), ft.dropdown.Option("spanish")],
+                                   on_change=self.__controller.conferma_selezione_lingua,
+                                   value="")
+                                    # on_click per bottoni, on_change per dropdown o textfield, ovvero quando cambia il valore
 
-        # self.page.add([])
+        #ROW2
+        self.metodoRicerca = ft.Dropdown(label="Modalità ricerca",
+                                          options=[ft.dropdown.Option("Default"), ft.dropdown.Option("Linear"), ft.dropdown.Option("Dichotomic")],
+                                          on_change=self.__controller.conferma_metodo_ricerca,
+                                          value="")
+        self.testoInput = ft.TextField(label="Inserisci qui il testo", value="")
+        self.bntOrtografia = ft.ElevatedButton(text="Controlla ortografia", on_click=self.__controller.handleSpellCheck, )
+        self.row2 = ft.Row(controls=[self.metodoRicerca, self.testoInput, self.bntOrtografia],  alignment=ft.MainAxisAlignment.CENTER)
+
+        #ROW3
+        self.lv = ft.ListView(expand=1, spacing=10)
+
+
+        self.page.add(self.lingua, self.row2, self.lv)
 
         self.page.update()
 
